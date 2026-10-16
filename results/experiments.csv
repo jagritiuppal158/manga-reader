@@ -1,0 +1,12 @@
+experiment,pipeline,training,text_order,joint_f1,balanced_joint_f1,speaker_acc_matched,coverage,notes
+A_baseline_v1,"Qwen2-VL-7B 4bit, page-by-page JSON prompt v1",none (frozen),0.5506,0.3246,0.1795,0.496,0.6571,
+A2_keep1,A + keep at most 1 copy of the same text per page,none (frozen),0.5645,0.3376,0.1811,0.4969,0.6561,same raw output as A
+B_prompt_v2,"Qwen2-VL-7B 4bit, page-by-page JSON prompt v2",none (frozen),0.5674,0.3587,0.2202,0.5586,0.6789,excludes SFX/tagline/recap; NARRATION only for boxes; right-to-left order
+B_prompt_v2_keep1,B_prompt_v2 + keep at most 1 copy of the same text per page,none (frozen),0.5671,0.3672,0.2209,0.5567,0.6754,same raw output as B_prompt_v2
+C_lora_v2prompt,"Qwen2-VL-7B 4bit + LoRA, page-by-page prompt v2","LoRA r=16, 2 epochs, lr 1e-4, page-level, 64 train sequences",0.6047,0.4259,0.2467,0.5972,0.7275,no cross-page speaker consistency
+C_lora_v2prompt_keep1,C_lora_v2prompt + keep at most 1 copy of the same text per page,same as C_lora_v2prompt,0.613,0.4305,0.2504,0.5956,0.7149,same raw output as C_lora_v2prompt
+ORACLE_pagelocal,"gold text + gold speakers, labels renamed per page",n/a (reference),1.0,0.7425,0.5896,0.7425,1.0,ceiling of any page-by-page system
+D_sequence_lora,"sequence-level: 3 pages per call, sequence-wide labels","LoRA r16, 64 train sequences, 4 epochs, answer-only loss, 768px",0.7517,0.4978,0.2881,0.6194,0.825,"several changes vs C at once (3 pages, seq labels, 768px, answer-only loss, 4 epochs)"
+D_sequence_lora,"sequence-level: 3 pages per call, sequence-wide labels","LoRA r16, 64 train sequences, 4 epochs, answer-only loss, 768px",0.7517,0.4978,0.2881,0.6194,0.825,"several changes vs C at once (3 pages, seq labels, 768px, answer-only loss, 4 epochs)"
+D_sequence_lora_dedupe,D + dedupe repeated lines per page,as D,0.7607,0.5157,0.3142,0.6214,0.8214,
+D_sequence_lora,"sequence-level: 3 pages per call, sequence-wide labels","LoRA r16, 64 train sequences, 4 epochs, answer-only loss, 768px",0.7517,0.4978,0.2881,0.6194,0.825,"several changes vs C at once (3 pages, seq labels, 768px, answer-only loss, 4 epochs)"
